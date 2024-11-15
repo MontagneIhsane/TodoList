@@ -1,1 +1,5 @@
-console.log("hello world!");
+document
+    .getElementById("button-add-todo")
+    .addEventListener("click", function() {
+        console.log("click");
+    });
