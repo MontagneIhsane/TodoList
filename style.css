@@ -5,3 +5,13 @@ h1 {
 button{
     font-size: 1rem; 
 }
+
+.todo-card{
+    list-style-type: none;
+    margin: 1rem;
+    padding: 1rem;
+    border: 0.2rem solid black;
+    border-radius: 0.5rem;
+
+    
+}
