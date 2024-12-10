@@ -1,34 +1,44 @@
-let todoList =document.getElementById("todo-list");
+const todoList = document.getElementById("todo-list");
+const todoInput = document.getElementById("todo-text-input");
+const addButton = document.getElementById("button-add-todo");
+const clearButton = document.getElementById("clear-button");
 
-document
-.getElementById("button-add-todo")
-.addEventListener("click", function() {
-    const uniqueId = Math.random().toString(36).slice(2, 12);
-    let todoInput = document.getElementById("todo-text-input");
+// Ajout d'une tâche
+addButton.addEventListener("click", () => {
+    if (!todoInput.value.trim()) return;
 
-        todoList.innerHTML += 
-        `<li class="todo-card">
-            <div class="flex-row">
-                <input type="checkbox" id="checkbox">
-                <span>${todoInput.value}</span>
-                <button>Delete</button>
-            </div>
-        </li>`;
+    const listItem = document.createElement("li");
+    listItem.className = "todo-card";
+
+    const taskContainer = document.createElement("div");
+    taskContainer.className = "flex-row";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.addEventListener("change", () => {
+        listItem.style.textDecoration = checkbox.checked ? "line-through" : "none";
     });
 
-    const checkbox = document.querySelectorAll('[id^="checkbox-"]');
-    checkbox.forEach(function(checkbox) {
-        checkbox.addEventListener("checked", function() {
-            checkbox.parentElement.style.textDecoration = checkbox.checkVisibility
-        });
+    const taskText = document.createElement("span");
+    taskText.textContent = todoInput.value;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+        todoList.removeChild(listItem);
     });
 
-    const clearbutton = document.getElementById("clear-button");
-    clearbutton.addEventListener("click", function() {
-        todoList.innerHTML = "";
-    });
+    taskContainer.append(checkbox, taskText, deleteButton);
+    listItem.appendChild(taskContainer);
+    todoList.appendChild(listItem);
 
-    
+    todoInput.value = "";
+});
+
+clearButton.addEventListener("click", () => {
+    todoList.innerHTML = "";
+});
+
 class Task {
     constructor(description) {
         this.description = description;
@@ -39,18 +49,13 @@ class Task {
         this.completed = true;
     }
 
-    showTask(task) {
-        alert(task.description)
-    }
-
-    update (newDescription){
+    update(newDescription) {
         this.description = newDescription;
     }
+
+    showTask() {
+        alert(this.description);
+    }
 }
-    
-let taskHakunamatata = new Task ("Hakunamatata to the life");
-console.log(taskHakunamatata);
-task.complete (); 
-console.log(taskHakunamatata);
-taskHakunamatata.update (NouvelleTask);
-console.log(taskHakunamatata);
+
+
