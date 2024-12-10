@@ -1,3 +1,4 @@
+
 const todoList = document.getElementById("todo-list");
 const todoInput = document.getElementById("todo-text-input");
 const addButton = document.getElementById("button-add-todo");
@@ -28,7 +29,31 @@ addButton.addEventListener("click", () => {
         todoList.removeChild(listItem);
     });
 
-    taskContainer.append(checkbox, taskText, deleteButton);
+    const archiveButton = document.createElement("button");
+    archiveButton.textContent = "Archiver";
+    archiveButton.className = "archive-button"; 
+    archiveButton.addEventListener("click", () => {
+        const archiveList = document.getElementById("archive-list");
+        archiveList.appendChild(listItem); 
+        archiveButton.remove(); 
+    });
+
+    const toggleArchiveButton = document.getElementById("button-toggle-archives");
+
+    toggleArchiveButton.addEventListener("click", () => {
+        const archiveList = document.getElementById("archive-list");
+        const isHidden = archiveList.classList.toggle("hidden"); 
+        document.getElementById("supprimer-archives").classList.toggle("hidden", isHidden); 
+});
+
+    const deleteArchivesButton = document.getElementById("supprimer-archives");
+
+    deleteArchivesButton.addEventListener("click", () => {
+        const archiveList = document.getElementById("archive-list");
+        archiveList.innerHTML = "";
+});
+
+    taskContainer.append(checkbox, taskText, deleteButton,archiveButton);
     listItem.appendChild(taskContainer);
     todoList.appendChild(listItem);
 
@@ -38,24 +63,3 @@ addButton.addEventListener("click", () => {
 clearButton.addEventListener("click", () => {
     todoList.innerHTML = "";
 });
-
-class Task {
-    constructor(description) {
-        this.description = description;
-        this.completed = false;
-    }
-
-    complete() {
-        this.completed = true;
-    }
-
-    update(newDescription) {
-        this.description = newDescription;
-    }
-
-    showTask() {
-        alert(this.description);
-    }
-}
-
-
